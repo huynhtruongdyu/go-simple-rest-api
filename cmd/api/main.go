@@ -32,14 +32,14 @@ func main() {
 		logger: logger,
 	}
 
-	mux := http.NewServeMux()
-	mux.HandleFunc("/hz", app.healthcheckHandler)
+	// mux := http.NewServeMux()
+	// mux.HandleFunc("/hz", app.healthcheckHandler)
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", cfg.port),
-		Handler:      mux,
+		Handler:      app.routes(),
 		IdleTimeout:  1 * time.Minute,
 		ReadTimeout:  10 * time.Second,
-		WriteTimeout: 10 * time.Second,
+		WriteTimeout: 30 * time.Second,
 	}
 	logger.Printf("starting %s server on %s\n", cfg.env, srv.Addr)
 	err := srv.ListenAndServe()
